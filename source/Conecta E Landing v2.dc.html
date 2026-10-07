@@ -44,6 +44,9 @@ a:hover{color:#FF5A47}
 #contato h2{line-height:1.1!important}
 #frase p{line-height:1.12!important}
 #metodo h2{line-height:1.1!important}
+/* Desempenho: animacoes pausadas fora da tela e sombra mais leve no celular */
+.anim-off,.anim-off *{animation-play-state:paused!important}
+@media (max-width:760px){#topo > div:last-child img{box-shadow:0 18px 36px rgba(0,0,0,.45)!important}}
 #fab{display:none}
 @media (max-width:1100px){
   #fab{display:flex;align-items:center;justify-content:center;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:50;width:60px;height:60px;border-radius:50%;background:#E8402F;color:#fff;box-shadow:0 12px 32px rgba(232,64,47,.45)}
@@ -372,27 +375,35 @@ class Component extends DCLogic {
     window.addEventListener('scroll', this.onScroll, { passive: true, capture: true });
     this.onScroll();
 
+    // Pausa as animacoes infinitas (logo e faixa) quando estao fora da tela: rolagem mais leve e menos bateria
+    if ('IntersectionObserver' in window) {
+      this.pauseIo = new IntersectionObserver(es => es.forEach(en => en.target.classList.toggle('anim-off', !en.isIntersecting)), { rootMargin: '80px' });
+      document.querySelectorAll('#topo > div:last-child, #faixa').forEach(el => this.pauseIo.observe(el));
+    }
+
     const root = this.rootRef.current;
     if (!root || !m || !('IntersectionObserver' in window)) return;
     const els = root.querySelectorAll('[data-reveal]');
     this.io = new IntersectionObserver(entries => {
       this.ioFired = true;
       entries.forEach(e => {
-        if (!e.isIntersecting) return;
+        if (!e.isIntersecting && e.boundingClientRect.top > 0) return;
         e.target.style.opacity = '1';
         e.target.style.transform = 'none';
         this.io.unobserve(e.target);
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: [0, 0.05], rootMargin: '0px 0px 8% 0px' });
     const vh = window.innerHeight;
     const show = el => { el.style.opacity = '1'; el.style.transform = 'none'; };
     this.safety = setTimeout(() => { if (!this.ioFired) els.forEach(show); }, 1500);
     els.forEach(el => {
       if (el.getBoundingClientRect().top < vh) return;
-      const d = +el.getAttribute('data-reveal') || 0;
+      const mobile = window.innerWidth < 761;
+      const d = Math.min(+el.getAttribute('data-reveal') || 0, mobile ? 120 : 300);
       el.style.opacity = '0';
-      el.style.transform = 'translateY(36px)';
-      el.style.transition = `opacity 1s cubic-bezier(.2,.7,.2,1) ${d}ms, transform 1s cubic-bezier(.2,.7,.2,1) ${d}ms`;
+      el.style.transform = mobile ? 'translateY(20px)' : 'translateY(32px)';
+      const dur = mobile ? .6 : .9;
+      el.style.transition = `opacity ${dur}s cubic-bezier(.2,.7,.2,1) ${d}ms, transform ${dur}s cubic-bezier(.2,.7,.2,1) ${d}ms`;
       this.io.observe(el);
     });
   }
@@ -402,6 +413,7 @@ class Component extends DCLogic {
     clearTimeout(this.safety);
     window.removeEventListener('scroll', this.onScroll, { capture: true });
     this.io && this.io.disconnect();
+    this.pauseIo && this.pauseIo.disconnect();
   }
 
   // Logo animado com anéis (Seção 1)
