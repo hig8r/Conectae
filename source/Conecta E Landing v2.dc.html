@@ -236,7 +236,7 @@ class Component extends DCLogic {
   // Liga/desliga animações (Tweaks "motion" e preferência de acessibilidade do aparelho)
   motion() {
     const reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    return (this.props.motion ?? true) && !reduced;
+    return (this.props.motion ?? true);
   }
 
   // Inicia animações: palavra do título, menu ao rolar, frase de efeito e entrada das seções
