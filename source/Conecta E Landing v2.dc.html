@@ -95,7 +95,7 @@ a:hover{color:#FF5A47}
   #metodo [data-reveal] p{font-size:16px!important}
 
   #sobre{grid-template-columns:minmax(0,1fr)!important;padding:80px 20px!important;gap:32px!important}
-  #sobre > div:first-child{aspect-ratio:4/3!important;max-width:100%!important;border-radius:20px!important}
+  #sobre > div:first-child{aspect-ratio:1/1!important;max-width:100%!important;border-radius:20px!important}
   #sobre h2{font-size:min(10vw,44px)!important}
   #sobre p{font-size:16px!important}
 
@@ -244,7 +244,7 @@ a:hover{color:#FF5A47}
   <sc-if value="{{ showAbout }}" hint-placeholder-val="{{ true }}">
     <section id="sobre" style="max-width:1240px;margin:0 auto;padding:144px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:56px 80px;align-items:center">
       <div data-reveal="0" style="position:relative;width:100%;max-width:460px;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#131C33">
-        <image-slot id="fundador-foto" shape="rect" placeholder="Foto do fundador / equipe"></image-slot>
+        <img id="fundador-foto" src="./assets/fundador.jpg" alt="Fundador da Conecta Ê" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%;display:block">
       </div>
       <div data-reveal="150" style="display:flex;flex-direction:column;gap:24px">
         <span style="font-size:14px;font-weight:600;letter-spacing:2.5px;color:#9DB2D9">SOBRE</span>
@@ -308,7 +308,7 @@ a:hover{color:#FF5A47}
   <a id="fab" href="{{ ctaHref }}" target="_blank" aria-label="{{ ctaLabel }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.06c-.24.68-1.41 1.3-1.95 1.35-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.1-1.47-1.1-2.81 0-1.34.7-2 .95-2.27.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.29-.12.56.16.27.7 1.16 1.51 1.88 1.04.93 1.91 1.21 2.18 1.35.27.14.43.11.59-.07.16-.18.68-.79.86-1.07.18-.27.36-.23.61-.14.25.09 1.58.75 1.85.88.27.14.45.2.52.32.07.11.07.65-.17 1.33z"/></svg></a>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;ctaChannel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;WhatsApp&quot;,&quot;Instagram&quot;],&quot;default&quot;:&quot;WhatsApp&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5531900000000&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showAbout&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;ctaChannel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;WhatsApp&quot;,&quot;Instagram&quot;],&quot;default&quot;:&quot;WhatsApp&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5511963020213&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showAbout&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
 /* ================================================================
    SCRIPT DA PÁGINA — textos editáveis e animações
    ----------------------------------------------------------------
@@ -318,7 +318,7 @@ a:hover{color:#FF5A47}
    • items      → nomes da faixa rolante (dentro de marquee())
    • services   → lista de serviços (dentro de renderVals())
    • steps      → passos do Método (dentro de renderVals())
-   • whatsapp   → número padrão: '5531900000000' (55 + DDD + número)
+   • whatsapp   → número padrão: '5511963020213' (55 + DDD + número)
    Evite mexer no restante, que controla as animações.
    ================================================================ */
 class Component extends DCLogic {
@@ -438,7 +438,7 @@ class Component extends DCLogic {
   renderVals() {
     const ch = this.props.ctaChannel ?? 'WhatsApp';
     // Número do WhatsApp: 55 + DDD + número, sem espaços
-    const phone = (this.props.whatsapp ?? '5531900000000').replace(/\D/g, '');
+    const phone = (this.props.whatsapp ?? '5511963020213').replace(/\D/g, '');
     const { w, lit: litCount, open, scrolled } = this.state;
     const word = this.rotating[w];
     const n = this.statement.length;
