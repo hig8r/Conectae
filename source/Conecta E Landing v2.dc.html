@@ -200,10 +200,35 @@ a:hover{color:#FF5A47}
        RODAPÉ
        - Nome da empresa e ano. Atualize "© 2026" quando necessário.
        ============================================================ -->
-  <footer style="border-top:1px solid rgba(255,255,255,.08)">
-    <div style="max-width:1240px;margin:0 auto;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:#9DB2D9">
-      <span>Conecta É · Marketing que aproxima</span>
-      <span>© 2026</span>
+  <footer style="border-top:1px solid rgba(255,255,255,.08);background:#070C18">
+    <div style="max-width:1240px;margin:0 auto;padding:72px 32px 40px;display:flex;flex-direction:column;gap:56px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:48px 64px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:20px;max-width:360px">
+          <a href="#topo" style="display:flex;align-items:center;gap:12px">
+            <img src="./assets/conecta-logo.png" alt="Conecta É" style="width:44px;height:44px;border-radius:50%;display:block">
+            <span style="font-family:'Anton',sans-serif;font-size:24px;letter-spacing:.5px;color:#fff;white-space:nowrap">CONECTA <span style="color:#E8402F">É</span></span>
+          </a>
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#C5D1E8">Marketing que aproxima sua marca das pessoas certas, com estratégia, criatividade e consistência.</p>
+        </div>
+        <div style="display:flex;gap:48px 80px;flex-wrap:wrap">
+          <nav style="display:flex;flex-direction:column;gap:14px;font-size:15px">
+            <span style="font-size:12px;font-weight:600;letter-spacing:2px;color:#9DB2D9;text-transform:uppercase;margin-bottom:6px">Navegação</span>
+            <a href="#topo" style="color:#C5D1E8;transition:color .25s" style-hover="color:#fff">Início</a>
+            <a href="#servicos" style="color:#C5D1E8;transition:color .25s" style-hover="color:#fff">Serviços</a>
+            <a href="#metodo" style="color:#C5D1E8;transition:color .25s" style-hover="color:#fff">Método</a>
+            <a href="#contato" style="color:#C5D1E8;transition:color .25s" style-hover="color:#fff">Contato</a>
+          </nav>
+          <div style="display:flex;flex-direction:column;gap:14px;font-size:15px">
+            <span style="font-size:12px;font-weight:600;letter-spacing:2px;color:#9DB2D9;text-transform:uppercase;margin-bottom:6px">Fale com a gente</span>
+            <a href="{{ ctaHref }}" target="_blank" style="color:#C5D1E8;transition:color .25s" style-hover="color:#fff">{{ ctaLabel }}</a>
+            <a href="https://instagram.com/agconectae" target="_blank" style="color:#C5D1E8;transition:color .25s" style-hover="color:#fff">Instagram @agconectae</a>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:#9DB2D9">
+        <span>© 2026 Conecta É. Todos os direitos reservados.</span>
+        <a href="#topo" style="display:inline-flex;align-items:center;gap:8px;color:#C5D1E8;transition:color .25s" style-hover="color:#fff">Voltar ao topo <span style="color:#E8402F">↑</span></a>
+      </div>
     </div>
   </footer>
 </div>
