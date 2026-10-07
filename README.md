@@ -1,6 +1,6 @@
 # Conectae — Landing page
 
-Site institucional da agência Conecta É (@agconectae).
+Site institucional da agência Conecta Ê (@agconectae).
 
 ## Publicar no Vercel
 1. Crie um repositório no GitHub chamado `Conectae`.
