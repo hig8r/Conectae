@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- ============================================================
+     CONFIGURAÇÕES DA PÁGINA (não aparece na tela)
+     - Favicon: troque o arquivo assets/conecta-logo.png para mudar o ícone da aba.
+     - Fontes: Anton (títulos) e Archivo (textos), carregadas do Google Fonts.
+     - Cores principais da marca:
+         #0A1020 = azul-marinho (fundo)
+         #E8402F = vermelho (destaques e botões)
+         #4C8BFF / #1F5FD1 = azul (destaques secundários)
+         #F3F5FA = cinza-claro (fundo da seção Método)
+         #C5D1E8 / #9DB2D9 = tons de texto secundário
+     - Para trocar uma cor no site todo, use "Localizar e substituir" no editor.
+     ============================================================ -->
+<helmet>
+<link rel="icon" type="image/png" href="./assets/conecta-logo.png">
+<link rel="apple-touch-icon" href="./assets/conecta-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+html,body{margin:0;background:#0A1020;color:#fff;font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#fff;text-decoration:none}
+a:hover{color:#FF5A47}
+@keyframes wordIn{from{opacity:0;transform:translateY(60%) rotate(4deg)}to{opacity:1;transform:none}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinRev{to{transform:rotate(-360deg)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+@keyframes pulse{0%,100%{opacity:.35;transform:scale(1)}50%{opacity:.6;transform:scale(1.08)}}
+</style>
+</helmet>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0A1020"/><circle cx="50" cy="50" r="20" fill="#E8402F"/><text x="50" y="58" text-anchor="middle" font-family="Impact,sans-serif" font-size="22" fill="#fff">C</text></svg></template>
+
+<div ref="{{ rootRef }}" style="min-height:100vh;background:#0A1020;overflow-x:hidden">
+
+  <!-- ============================================================
+       MENU DO TOPO (fixo ao rolar)
+       - Logo + nome "CONECTA É" à esquerda.
+       - Links à direita: o href="#servicos" leva até a seção com id="servicos".
+       - Para adicionar um link, copie uma linha <a href="#...">Texto</a>.
+       ============================================================ -->
+  <header style="{{ headerStyle }}">
+    <div style="max-width:1240px;margin:0 auto;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap">
+      <a href="#topo" style="display:flex;align-items:center;gap:12px;flex:none">
+        <img src="./assets/conecta-logo.png" alt="Conecta É" style="width:40px;height:40px;border-radius:50%;display:block">
+        <span style="font-family:'Anton',sans-serif;font-size:21px;letter-spacing:.5px;color:#fff;white-space:nowrap">CONECTA <span style="color:#E8402F">É</span></span>
+      </a>
+      <nav style="display:flex;align-items:center;gap:32px;font-size:15px;font-weight:500;flex-wrap:wrap">
+        <a href="#servicos">Serviços</a>
+        <a href="#metodo">Método</a>
+        <a href="#contato" style="border:1px solid rgba(255,255,255,.3);padding:0 22px;height:44px;display:inline-flex;align-items:center;border-radius:999px;line-height:1">Fale com a gente</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       SEÇÃO 1 — TOPO / HERO
+       - Etiqueta pequena, título grande, texto de apoio e botões.
+       - A palavra que alterna no título ("conecta.", "engaja."...) é definida
+         no script, na linha:  // Palavras que alternam no título do topo
+  rotating = ['conecta.', 'engaja.', ...]
+       - O botão vermelho usa o link do WhatsApp/Instagram configurado no painel Tweaks.
+       - À direita: logo animado com anéis girando (montado no script, função orb()).
+       ============================================================ -->
+  <section id="topo" style="position:relative;max-width:1240px;margin:0 auto;padding:96px 32px 128px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:56px 64px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:32px">
+      <span data-reveal="0" style="font-size:14px;font-weight:600;letter-spacing:2.5px;color:#9DB2D9">AGÊNCIA DE MARKETING · FOCO EM RESULTADOS</span>
+      <h1 data-reveal="100" style="margin:0;font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(56px,8.2vw,120px);line-height:.95;text-transform:uppercase;letter-spacing:-.5px">
+        <span style="display:block">Marketing</span>
+        <span style="display:block">que <span style="display:inline-block;overflow:hidden;vertical-align:bottom;padding-right:.1em">{{ rotatingWord }}</span></span>
+      </h1>
+      <p data-reveal="200" style="margin:0;max-width:460px;font-size:19px;line-height:1.6;color:#C5D1E8;text-wrap:pretty">Transformamos presença digital em resultados reais para pequenas e médias empresas.</p>
+      <div data-reveal="300" style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+        <a href="{{ ctaHref }}" target="_blank" style="background:#E8402F;color:#fff;font-weight:600;font-size:16px;padding:0 30px;height:56px;display:inline-flex;align-items:center;line-height:1;border-radius:999px;transition:transform .25s" style-hover="transform:translateY(-2px)">{{ ctaLabel }}</a>
+        <a href="#servicos" style="font-weight:600;font-size:16px;padding:0 8px;height:56px;display:inline-flex;align-items:center;line-height:1;gap:10px">Ver serviços <span style="color:#E8402F">↓</span></a>
+      </div>
+    </div>
+    <div data-reveal="200" style="position:relative;width:100%;max-width:440px;aspect-ratio:1/1;justify-self:center">{{ heroOrb }}</div>
+  </section>
+
+  <!-- ============================================================
+       SEÇÃO 2 — FAIXA ROLANTE DE SERVIÇOS
+       - Os nomes que passam rolando ficam no script, função marquee(),
+         na linha:  const items = ['Gestão de redes sociais', ...]
+       - Velocidade: altere "marquee 40s" (número maior = mais lento).
+       ============================================================ -->
+  <section style="border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding:32px 0;overflow:hidden">{{ marquee }}</section>
+
+  <!-- ============================================================
+       SEÇÃO 3 — FRASE DE EFEITO (palavras acendem ao rolar)
+       - O texto fica no script, na lista:  // Frase de efeito (Seção 3). , 1 = vermelho | , 2 = azul
+  statement = [ ['Marketing'], ['não'], ... ]
+       - Cada palavra é um item. Acrescente , 1 para vermelho ou , 2 para azul.
+         Exemplo:  ['crescimento.', 1]
+       ============================================================ -->
+  <section ref="{{ statementRef }}" style="max-width:1240px;margin:0 auto;padding:144px 32px 128px">
+    <p style="margin:0;display:flex;flex-wrap:wrap;gap:.04em .26em;font-family:'Anton',sans-serif;font-size:clamp(44px,6.6vw,96px);line-height:1.05;text-transform:uppercase">
+      <sc-for list="{{ words }}" as="w" hint-placeholder-count="14">
+        <span style="{{ w.style }}">{{ w.t }}</span>
+      </sc-for>
+    </p>
+  </section>
+
+  <!-- ============================================================
+       SEÇÃO 4 — SERVIÇOS (lista que abre ao passar o mouse/tocar)
+       - Título e descrição de cada serviço ficam no script, dentro de renderVals(),
+         na lista:  const services = [ ['Título', 'Descrição'], ... ]
+       - Para adicionar um serviço, copie uma linha da lista e edite os textos.
+       ============================================================ -->
+  <section id="servicos" style="max-width:1240px;margin:0 auto;padding:0 32px 144px;display:flex;flex-direction:column;gap:48px">
+    <div data-reveal="0" style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+      <h2 style="margin:0;font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,5vw,64px);line-height:1;text-transform:uppercase">O que fazemos</h2>
+      <span style="font-size:14px;font-weight:600;letter-spacing:2.5px;color:#9DB2D9">SERVIÇOS · 06</span>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+        <div data-reveal="{{ s.delay }}" onMouseEnter="{{ s.open }}" onClick="{{ s.open }}" style="border-top:1px solid rgba(255,255,255,.12);padding:28px 0;cursor:pointer;display:flex;flex-direction:column">
+          <div style="display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:16px;align-items:center">
+            <span style="font-size:14px;font-weight:600;color:#9DB2D9;letter-spacing:1px">{{ s.n }}</span>
+            <h3 style="{{ s.titleStyle }}">{{ s.title }}</h3>
+            <span style="{{ s.arrowStyle }}">↗</span>
+          </div>
+          <div style="{{ s.bodyStyle }}">
+            <div style="overflow:hidden">
+              <p style="margin:0;padding:16px 64px 4px 88px;max-width:708px;font-size:18px;line-height:1.6;color:#C5D1E8">{{ s.text }}</p>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SEÇÃO 5 — MÉTODO (3 passos, fundo claro)
+       - Os passos ficam no script, no final de renderVals(), na lista "steps":
+         { n: '1', title: 'Estratégia', text: '...' }
+       ============================================================ -->
+  <section id="metodo" style="background:#F3F5FA;color:#0A1020">
+    <div style="max-width:1240px;margin:0 auto;padding:144px 32px;display:flex;flex-direction:column;gap:72px">
+      <h2 data-reveal="0" style="margin:0;font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(44px,6vw,84px);line-height:1.04;text-transform:uppercase">Pequenas ações,<br><span style="color:#E8402F">grandes resultados!</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:48px 56px">
+        <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+          <div data-reveal="{{ st.delay }}" style="display:flex;flex-direction:column;gap:16px;padding-top:32px;border-top:1px solid #D5DCE8">
+            <span style="font-family:'Anton',sans-serif;font-size:112px;line-height:.9;margin-bottom:12px;color:transparent;-webkit-text-stroke:1.5px #1F5FD1">{{ st.n }}</span>
+            <h3 style="margin:0;font-family:'Anton',sans-serif;font-weight:400;font-size:34px;text-transform:uppercase">{{ st.title }}</h3>
+            <p style="margin:0;font-size:18px;line-height:1.6;color:#3D4A66;max-width:320px">{{ st.text }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SEÇÃO 6 — SOBRE A AGÊNCIA
+       - Pode ser escondida pelo painel Tweaks (opção showAbout).
+       - FOTO: troque o <image-slot ...> por uma imagem real, por exemplo:
+         <img src="./assets/equipe.jpg" alt="Equipe" style="width:100%;height:100%;object-fit:cover">
+         (coloque o arquivo da foto dentro da pasta assets/)
+       - Título e parágrafo podem ser editados direto aqui.
+       ============================================================ -->
+  <sc-if value="{{ showAbout }}" hint-placeholder-val="{{ true }}">
+    <section id="sobre" style="max-width:1240px;margin:0 auto;padding:144px 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:56px 80px;align-items:center">
+      <div data-reveal="0" style="position:relative;width:100%;max-width:460px;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:#131C33">
+        <image-slot id="fundador-foto" shape="rect" placeholder="Foto do fundador / equipe"></image-slot>
+      </div>
+      <div data-reveal="150" style="display:flex;flex-direction:column;gap:24px">
+        <span style="font-size:14px;font-weight:600;letter-spacing:2.5px;color:#9DB2D9">SOBRE</span>
+        <h2 style="margin:0;font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(40px,4.6vw,60px);line-height:1;text-transform:uppercase">Bem-vindo(a) à agência que coloca <span style="color:#E8402F">resultado</span> no centro.</h2>
+        <p style="margin:0;max-width:500px;font-size:18px;line-height:1.65;color:#C5D1E8;text-wrap:pretty">Ajudamos empresas a se posicionarem com estratégia, criatividade e consistência. Cada post, campanha e anúncio tem um objetivo: aproximar sua marca das pessoas certas.</p>
+      </div>
+    </section>
+  </sc-if>
+
+  <!-- ============================================================
+       SEÇÃO 7 — CONTATO / CHAMADA FINAL
+       - Botão vermelho: WhatsApp ou Direct (definido no Tweaks / no script).
+       - Botão do Instagram: altere o link https://instagram.com/agconectae se mudar o perfil.
+       ============================================================ -->
+  <section id="contato" style="position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1240px;margin:0 auto;padding:144px 32px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:36px">
+      <img data-reveal="0" src="./assets/conecta-logo.png" alt="" style="width:88px;height:88px;border-radius:50%;display:block">
+      <h2 data-reveal="100" style="margin:0;font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(52px,7.6vw,112px);line-height:1.02;text-transform:uppercase;max-width:1000px">Marcas que conectam, <span style="color:#E8402F">negócios que crescem!</span></h2>
+      <div data-reveal="200" style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+        <a href="{{ ctaHref }}" target="_blank" style="background:#E8402F;color:#fff;font-weight:600;font-size:17px;padding:0 34px;height:60px;display:inline-flex;align-items:center;line-height:1;border-radius:999px;transition:transform .25s" style-hover="transform:translateY(-2px)">{{ ctaLabel }}</a>
+        <a href="https://instagram.com/agconectae" target="_blank" style="border:1px solid rgba(255,255,255,.3);font-weight:600;font-size:17px;padding:0 34px;height:60px;display:inline-flex;align-items:center;line-height:1;border-radius:999px">@agconectae</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RODAPÉ
+       - Nome da empresa e ano. Atualize "© 2026" quando necessário.
+       ============================================================ -->
+  <footer style="border-top:1px solid rgba(255,255,255,.08)">
+    <div style="max-width:1240px;margin:0 auto;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:#9DB2D9">
+      <span>Conecta É · Marketing que aproxima</span>
+      <span>© 2026</span>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;ctaChannel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;WhatsApp&quot;,&quot;Instagram&quot;],&quot;default&quot;:&quot;WhatsApp&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5531900000000&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showAbout&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+/* ================================================================
+   SCRIPT DA PÁGINA — textos editáveis e animações
+   ----------------------------------------------------------------
+   ONDE EDITAR (procure por estes nomes):
+   • rotating   → palavras que alternam no título do topo
+   • statement  → frase de efeito que acende ao rolar
+   • items      → nomes da faixa rolante (dentro de marquee())
+   • services   → lista de serviços (dentro de renderVals())
+   • steps      → passos do Método (dentro de renderVals())
+   • whatsapp   → número padrão: '5531900000000' (55 + DDD + número)
+   Evite mexer no restante, que controla as animações.
+   ================================================================ */
+class Component extends DCLogic {
+  state = { w: 0, lit: 0, open: 0, scrolled: false };
+  rootRef = React.createRef();
+  statementRef = React.createRef();
+  // Palavras que alternam no título do topo
+  rotating = ['conecta.', 'engaja.', 'vende.', 'cresce.'];
+  // Frase de efeito (Seção 3). , 1 = vermelho | , 2 = azul
+  statement = [
+    ['Marketing'], ['não'], ['é'], ['custo.'], ['É', 1], ['crescimento.', 1],
+    ['Quem'], ['não'], ['investe'], ['em'], ['branding'], ['compete'], ['por'], ['preço.', 2]
+  ];
+
+  // Liga/desliga animações (Tweaks "motion" e preferência de acessibilidade do aparelho)
+  motion() {
+    const reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return (this.props.motion ?? true) && !reduced;
+  }
+
+  // Inicia animações: palavra do título, menu ao rolar, frase de efeito e entrada das seções
+  componentDidMount() {
+    const m = this.motion();
+    if (m) this.timer = setInterval(() => {
+      if (document.hidden || window.scrollY > window.innerHeight) return;
+      this.setState(s => ({ w: (s.w + 1) % this.rotating.length }));
+    }, 2200);
+    const n = this.statement.length;
+    this.onScroll = () => {
+      if (this.raf) return;
+      this.raf = requestAnimationFrame(() => {
+        this.raf = null;
+        const el = this.statementRef.current;
+        const vh = window.innerHeight;
+        let lit = n;
+        if (el && m) {
+          const r = el.getBoundingClientRect();
+          const p = Math.max(0, Math.min(1, (vh * 0.8 - r.top) / (r.height * 0.75)));
+          lit = Math.max(0, Math.min(n, Math.ceil(p * (n + 2) - 1)));
+        }
+        const sy = (document.scrollingElement || document.documentElement).scrollTop || window.scrollY;
+        const scrolled = sy > 20;
+        if (lit !== this.state.lit || scrolled !== this.state.scrolled) this.setState({ lit, scrolled });
+      });
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true, capture: true });
+    this.onScroll();
+
+    const root = this.rootRef.current;
+    if (!root || !m || !('IntersectionObserver' in window)) return;
+    const els = root.querySelectorAll('[data-reveal]');
+    this.io = new IntersectionObserver(entries => {
+      this.ioFired = true;
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'none';
+        this.io.unobserve(e.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    const vh = window.innerHeight;
+    const show = el => { el.style.opacity = '1'; el.style.transform = 'none'; };
+    this.safety = setTimeout(() => { if (!this.ioFired) els.forEach(show); }, 1500);
+    els.forEach(el => {
+      if (el.getBoundingClientRect().top < vh) return;
+      const d = +el.getAttribute('data-reveal') || 0;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(36px)';
+      el.style.transition = `opacity 1s cubic-bezier(.2,.7,.2,1) ${d}ms, transform 1s cubic-bezier(.2,.7,.2,1) ${d}ms`;
+      this.io.observe(el);
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    clearTimeout(this.safety);
+    window.removeEventListener('scroll', this.onScroll, { capture: true });
+    this.io && this.io.disconnect();
+  }
+
+  // Logo animado com anéis (Seção 1)
+  orb() {
+    const m = this.motion();
+    if (this._orb && this._orbM === m) return this._orb;
+    this._orbM = m;
+    const e = React.createElement;
+    const anim = (a) => (m ? a : 'none');
+    const ring = (inset, border, a, dot) => e('div', { style: { position: 'absolute', inset, borderRadius: '50%', border, animation: anim(a), willChange: m ? 'transform' : 'auto' } },
+      e('span', { style: { position: 'absolute', top: '50%', left: -6, width: 12, height: 12, marginTop: -6, borderRadius: '50%', background: dot, boxShadow: `0 0 24px ${dot}` } }));
+    this._orbEl = e(React.Fragment, null,
+      e('div', { style: { position: 'absolute', inset: '18%', borderRadius: '50%', background: 'radial-gradient(circle, rgba(31,95,209,.45), rgba(31,95,209,.15) 45%, rgba(31,95,209,0) 72%)', transform: 'scale(1.4)', animation: anim('pulse 6s ease-in-out infinite'), willChange: m ? 'transform, opacity' : 'auto' } }),
+      ring('0', '1px solid rgba(255,255,255,.12)', 'spin 28s linear infinite', '#E8402F'),
+      ring('11%', '1px dashed rgba(76,139,255,.4)', 'spinRev 20s linear infinite', '#4C8BFF'),
+      e('img', { src: './assets/conecta-logo.png', alt: 'Conecta É', style: { position: 'absolute', inset: '25%', width: '50%', height: '50%', borderRadius: '50%', boxShadow: '0 40px 80px rgba(0,0,0,.5)', animation: anim('float 7s ease-in-out infinite'), willChange: m ? 'transform' : 'auto' } })
+    );
+    this._orb = this._orbEl;
+    return this._orb;
+  }
+
+  // Faixa rolante de serviços (Seção 2)
+  marquee() {
+    const m = this.motion();
+    if (this._mq && this._mqM === m) return this._mq;
+    this._mqM = m;
+    const e = React.createElement;
+    // Edite aqui os nomes da faixa rolante
+    const items = ['Gestão de redes sociais', 'Identidade visual', 'Produção de conteúdo', 'Tráfego pago', 'Vídeos que vendem', 'Branding'];
+    const row = (k) => e('div', { key: k, style: { display: 'flex', alignItems: 'center', gap: 48, paddingRight: 48, flex: 'none' } },
+      items.flatMap((t, i) => [
+        e('span', { key: 't' + i, style: { fontFamily: "'Anton',sans-serif", fontSize: 'clamp(28px,3.4vw,44px)', textTransform: 'uppercase', whiteSpace: 'nowrap', color: i % 2 ? 'transparent' : '#fff', WebkitTextStroke: i % 2 ? '1px rgba(255,255,255,.55)' : 'none' } }, t),
+        e('span', { key: 'd' + i, style: { width: 10, height: 10, borderRadius: '50%', background: i % 2 ? '#4C8BFF' : '#E8402F', flex: 'none' } })
+      ]));
+    this._mq = e('div', { style: { display: 'flex', width: 'max-content', animation: m ? 'marquee 40s linear infinite' : 'none', willChange: m ? 'transform' : 'auto' } }, row('a'), row('b'));
+    return this._mq;
+  }
+
+  renderVals() {
+    const ch = this.props.ctaChannel ?? 'WhatsApp';
+    // Número do WhatsApp: 55 + DDD + número, sem espaços
+    const phone = (this.props.whatsapp ?? '5531900000000').replace(/\D/g, '');
+    const { w, lit: litCount, open, scrolled } = this.state;
+    const word = this.rotating[w];
+    const n = this.statement.length;
+    // Serviços (Seção 4): ['Título', 'Descrição']
+    const services = [
+      ['Gestão de redes sociais', 'Planejamento, calendário editorial e gestão do seu perfil com constância e propósito.'],
+      ['Identidade visual', 'Logo, cores e linguagem visual que deixam sua marca reconhecível em qualquer lugar.'],
+      ['Produção de conteúdo', 'Posts, carrosséis e copy pensados para engajar e converter.'],
+      ['Tráfego pago', 'Anúncios no Meta e Google para alcançar quem está pronto para comprar.'],
+      ['Vídeos que vendem', 'Roteiro, captação e edição de vídeos curtos para Reels e anúncios.'],
+      ['Branding', 'Posicionamento e propósito para sua empresa vender valor, não preço.']
+    ];
+    return {
+      rootRef: this.rootRef,
+      statementRef: this.statementRef,
+      showAbout: this.props.showAbout ?? true,
+      ctaLabel: ch === 'WhatsApp' ? 'Chamar no WhatsApp' : 'Chamar no Direct',
+      ctaHref: ch === 'WhatsApp' ? `https://wa.me/${phone}` : 'https://ig.me/m/agconectae',
+      headerStyle: {
+        position: 'sticky', top: 0, zIndex: 20, transition: 'background .4s, border-color .4s',
+        background: scrolled ? 'rgba(10,16,32,.96)' : 'rgba(10,16,32,0)',
+        borderBottom: `1px solid ${scrolled ? 'rgba(255,255,255,.08)' : 'rgba(255,255,255,0)'}`
+      },
+      rotatingWord: React.createElement('span', {
+        key: word,
+        style: { display: 'inline-block', color: w % 2 ? '#4C8BFF' : '#E8402F', animation: this.motion() ? 'wordIn .7s cubic-bezier(.2,.8,.2,1)' : 'none' }
+      }, word),
+      heroOrb: this.orb(),
+      marquee: this.marquee(),
+      words: this.statement.map(([t, accent], i) => {
+        const lit = i < litCount;
+        return {
+          t,
+          style: {
+            display: 'inline-block',
+            transition: 'color .5s, opacity .5s',
+            opacity: lit ? 1 : 0.16,
+            color: accent === 1 ? '#E8402F' : accent === 2 ? '#4C8BFF' : '#fff'
+          }
+        };
+      }),
+      services: services.map(([title, text], i) => {
+        const on = open === i;
+        return {
+          n: String(i + 1).padStart(2, '0'), title, text, delay: i * 60,
+          open: () => this.state.open !== i && this.setState({ open: i }),
+          titleStyle: { margin: 0, fontFamily: "'Anton',sans-serif", fontWeight: 400, fontSize: 'clamp(30px,4.2vw,58px)', lineHeight: 1, textTransform: 'uppercase', color: on ? '#fff' : 'rgba(255,255,255,.4)', transition: 'color .4s, transform .5s cubic-bezier(.2,.7,.2,1)', transform: on ? 'translateX(12px)' : 'none' },
+          arrowStyle: { width: 52, height: 52, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, transition: 'all .4s', background: on ? '#E8402F' : 'transparent', border: `1px solid ${on ? '#E8402F' : 'rgba(255,255,255,.2)'}`, color: '#fff', transform: on ? 'rotate(45deg)' : 'none' },
+          bodyStyle: { display: 'grid', gridTemplateRows: on ? '1fr' : '0fr', opacity: on ? 1 : 0, transition: 'grid-template-rows .5s cubic-bezier(.2,.7,.2,1), opacity .4s' }
+        };
+      }),
+      // Passos do Método (Seção 5)
+      steps: [
+        { n: '1', title: 'Estratégia', text: 'Direcionamos seu negócio para o caminho certo.', delay: 0 },
+        { n: '2', title: 'Identidade', text: 'Criamos marcas com propósito e personalidade.', delay: 140 },
+        { n: '3', title: 'Crescimento', text: 'Transformamos presença em resultados reais.', delay: 280 }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
