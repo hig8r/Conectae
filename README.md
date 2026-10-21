@@ -1,4 +1,4 @@
-# Conectae — Landing page
+# Conectae
 
 Site institucional da agência Conecta Ê (@agconectae).
 
