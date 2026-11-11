@@ -6,9 +6,17 @@
     {
       "source": "/(.*)",
       "headers": [
+        { "key": "Content-Security-Policy", "value": "base-uri 'none'; connect-src 'self'; default-src 'none'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self'; manifest-src 'self'; media-src 'none'; object-src 'none'; script-src 'self' 'sha256-FVtfpBBGVG8LVYiER72F/FTwDhWr7uRViZ3vaC25A2U=' 'sha256-NDCvd1NGFw2TftC5qiqQQD9p6k/sVVA0af4miCnhCFk='; style-src 'self'; upgrade-insecure-requests; worker-src 'none';" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
         { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), xr-spatial-tracking=()" },
+        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        { "key": "Cross-Origin-Resource-Policy", "value": "same-origin" },
+        { "key": "Cross-Origin-Embedder-Policy", "value": "require-corp" },
+        { "key": "X-DNS-Prefetch-Control", "value": "off" },
+        { "key": "X-Permitted-Cross-Domain-Policies", "value": "none" }
       ]
     },
     {
@@ -16,6 +24,17 @@
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
+    },
+    {
+      "source": "/(.*).html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
     }
+  ],
+  "redirects": [
+    { "source": "/README.md", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/SECURITY.md", "destination": "/404.html", "statusCode": 404 },
+    { "source": "/tools/(.*)", "destination": "/404.html", "statusCode": 404 }
   ]
 }

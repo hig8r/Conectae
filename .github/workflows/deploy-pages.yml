@@ -2,7 +2,7 @@ name: Deploy no GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [estetica-capilar]
   workflow_dispatch:
 
 permissions:
@@ -15,22 +15,57 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  verificar:
+    name: Verificacoes de seguranca
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Falha o build se a CSP das paginas estiver fora de sincronia
+      # com os scripts inline (hash desatualizado = script bloqueado).
+      - name: Conferir a Content Security Policy
+        run: node tools/gerar-csp.mjs --verificar
+
+      # Impede que segredo entre no repositorio por descuido.
+      - name: Procurar segredos no codigo
+        run: |
+          if grep -rniE "(api[_-]?key|client_secret|-----BEGIN [A-Z ]*PRIVATE KEY|AKIA[0-9A-Z]{16})" \
+             --include="*.html" --include="*.js" --include="*.json" --include="*.toml" .; then
+            echo "Possivel segredo encontrado no codigo."
+            exit 1
+          fi
+          echo "Nenhum segredo encontrado."
+
   deploy:
+    name: Publicar
+    needs: verificar
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Baixar o repositorio
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configurar o Pages
-        uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v5
 
-      - name: Enviar os arquivos do site
-        uses: actions/upload-pages-artifact@v3
+      # Publica apenas os arquivos do site. Documentacao, configuracao
+      # de deploy e scripts ficam fora do que vai para o ar.
+      - name: Montar o pacote publico
+        run: |
+          mkdir -p _site
+          cp -r index.html 404.html politica-de-privacidade.html \
+                robots.txt sitemap.xml site.webmanifest .nojekyll \
+                css js assets .well-known _site/
+          echo "Conteudo publicado:"
+          find _site -type f | sort
+
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: "."
+          path: _site
 
       - name: Publicar
         id: deployment

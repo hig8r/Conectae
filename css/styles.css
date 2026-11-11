@@ -426,7 +426,14 @@ a:hover { color: var(--vinho-700); }
 }
 
 /* Processo */
-.processo { margin-top: 3.5rem; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
+.processo {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+}
 .passo { border-top: 2px solid #D9B191; padding-top: 1.375rem; display: flex; flex-direction: column; gap: 0.75rem; }
 .passo__numero {
   font-family: var(--fonte-titulo);
@@ -656,6 +663,39 @@ a:hover { color: var(--vinho-700); }
   .zap-flutuante { padding: 16px; }
   .rodape__base { flex-direction: column; }
 }
+
+/* ---------- 9.1 Utilitários (substituem estilos inline, exigidos pela CSP) ---------- */
+.container--estreito { max-width: 800px; }
+.placeholder--preenche { width: 100%; height: 100%; }
+.acoes-centro { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+.bloco-acao { margin-top: 2.5rem; }
+.nota-legal { margin-top: 2.5rem; font-size: 0.875rem; color: var(--texto-claro); }
+.rodape__base--simples { margin-top: 0; border-top: none; padding-top: 0; }
+
+.documento h3 {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  color: var(--vinho-800);
+}
+.documento h3:first-of-type { margin-top: 2.5rem; }
+
+.pagina-erro {
+  background: var(--vinho-700);
+  color: var(--texto-inverso);
+}
+.pagina-erro__conteudo {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding-block: 4rem;
+}
+.pagina-erro__conteudo img { border-radius: 10px; }
+.pagina-erro h1 { font-size: clamp(2rem, 5vw, 3rem); color: #FDF6EF; }
+.pagina-erro p { color: #E9CFC0; max-width: 46ch; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

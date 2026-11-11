@@ -1,0 +1,8 @@
+# Canal para reportar problemas de segurança neste site.
+# Formato definido pela RFC 9116.
+# Atualize o e-mail e a data de expiração antes de publicar.
+
+Contact: mailto:contato@esteticacapilarliasantos.com.br
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: pt-BR, en
+Canonical: https://esteticacapilarliasantos.com.br/.well-known/security.txt

@@ -11,14 +11,34 @@ Site estático, sem framework e sem build: HTML, CSS e JavaScript puros.
 ├── politica-de-privacidade.html  política LGPD (modelo base)
 ├── 404.html                      página de erro
 ├── css/styles.css                estilo único, com tokens da marca
+├── css/fonts.css                 fontes auto-hospedadas (sem terceiros)
 ├── js/config.js                  CONFIGURAÇÃO: telefone, endereço, redes
 ├── js/main.js                    menu mobile, formulário e aplicação da config
 ├── assets/img/                   logo, favicons e imagem social
+├── assets/fonts/                 Cormorant Garamond e Jost (OFL)
+├── tools/gerar-csp.mjs           gera a Content Security Policy
+├── tools/servidor-teste.mjs      servidor local com os cabeçalhos reais
+├── tools/testes-seguranca.mjs    bateria de testes de segurança
 ├── robots.txt · sitemap.xml      SEO
+├── .well-known/security.txt      canal para reportar falhas (RFC 9116)
+├── SECURITY.md                   postura de segurança e riscos residuais
 ├── site.webmanifest              ícone na tela inicial do celular
-├── netlify.toml · vercel.json    deploy em Netlify ou Vercel
-└── .github/workflows/            deploy automático no GitHub Pages
+├── netlify.toml · vercel.json    deploy e cabeçalhos de segurança
+└── .github/workflows/            CI de segurança e deploy no Pages
 ```
+
+## Segurança
+
+A página passou por auditoria AppSec. Os detalhes, os riscos residuais
+e as pendências de configuração estão em [SECURITY.md](SECURITY.md).
+
+Dois pontos que afetam o dia a dia:
+
+- Ao mexer em qualquer script inline ou no JSON-LD, rode
+  `node tools/gerar-csp.mjs`. Sem isso a CSP bloqueia o script e o CI
+  falha de propósito.
+- Nunca coloque chave de API, token ou senha em `js/config.js`. O
+  arquivo é entregue ao navegador.
 
 ## Como configurar
 

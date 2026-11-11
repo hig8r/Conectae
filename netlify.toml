@@ -1,13 +1,37 @@
+# Configuração de deploy e de cabeçalhos de segurança (Netlify).
+# A linha de Content-Security-Policy é gerada por tools/gerar-csp.mjs.
+# Não edite os hashes à mão.
+
 [build]
   publish = "."
 
+# ---------- Cabeçalhos de segurança, todas as rotas ----------
 [[headers]]
   for = "/*"
   [headers.values]
+    Content-Security-Policy = "base-uri 'none'; connect-src 'self'; default-src 'none'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self'; manifest-src 'self'; media-src 'none'; object-src 'none'; script-src 'self' 'sha256-FVtfpBBGVG8LVYiER72F/FTwDhWr7uRViZ3vaC25A2U=' 'sha256-NDCvd1NGFw2TftC5qiqQQD9p6k/sVVA0af4miCnhCFk='; style-src 'self'; upgrade-insecure-requests; worker-src 'none';"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
     X-Content-Type-Options = "nosniff"
-    X-Frame-Options = "SAMEORIGIN"
+    X-Frame-Options = "DENY"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Permissions-Policy = "accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), xr-spatial-tracking=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Resource-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "require-corp"
+    X-DNS-Prefetch-Control = "off"
+    X-Permitted-Cross-Domain-Policies = "none"
+
+# ---------- Cache ----------
+# HTML sempre revalida, para que uma correção chegue na hora.
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/assets/*"
@@ -23,3 +47,20 @@
   for = "/js/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+# ---------- Arquivos que não devem ser servidos ----------
+# Documentação e configuração não precisam ficar públicas.
+[[redirects]]
+  from = "/README.md"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/SECURITY.md"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/404.html"
+  status = 404

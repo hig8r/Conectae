@@ -38,6 +38,14 @@ window.SITE = {
   /* Endpoint do formulário.
      Deixe vazio ("") para o formulário abrir o WhatsApp com os dados preenchidos.
      Para receber por e-mail, crie um formulário em formspree.io ou similar
-     e cole a URL aqui. Ex.: "https://formspree.io/f/xxxxxxx" */
+     e cole a URL aqui. Ex.: "https://formspree.io/f/xxxxxxx"
+
+     ATENÇÃO, DOIS PONTOS OBRIGATÓRIOS AO CONFIGURAR:
+     1. Só são aceitas URLs https. O script ignora qualquer outro esquema.
+     2. Libere o domínio em connect-src dentro de tools/gerar-csp.mjs e
+        rode `node tools/gerar-csp.mjs`, senão a CSP bloqueia o envio.
+
+     NUNCA coloque chave de API, token ou senha neste arquivo. Ele é
+     entregue ao navegador e qualquer visitante consegue ler o conteúdo. */
   endpointFormulario: ""
 };

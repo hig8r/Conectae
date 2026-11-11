@@ -27,11 +27,15 @@
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
 
-<!-- Fontes -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap">
+<!-- Política de Segurança de Conteúdo.
+     Gerada por tools/gerar-csp.mjs. Não edite os hashes à mão. -->
+<meta http-equiv="Content-Security-Policy" content="base-uri 'none'; connect-src 'self'; default-src 'none'; font-src 'self'; form-action 'self'; img-src 'self'; manifest-src 'self'; media-src 'none'; object-src 'none'; script-src 'self' 'sha256-NDCvd1NGFw2TftC5qiqQQD9p6k/sVVA0af4miCnhCFk=' 'sha256-FVtfpBBGVG8LVYiER72F/FTwDhWr7uRViZ3vaC25A2U='; style-src 'self'; upgrade-insecure-requests; worker-src 'none';">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 
+<!-- Fontes auto-hospedadas: nenhuma requisição a terceiros -->
+<link rel="preload" href="assets/fonts/jost-300-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/cormorant-garamond-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -98,7 +102,7 @@
       <div class="hero__midia">
         <div class="hero__cartao">
           <!-- Troque pela foto principal: vertical 4:5, cliente atendida (com autorização) ou o estúdio -->
-          <div class="placeholder placeholder--escuro" style="width:100%;height:100%">
+          <div class="placeholder placeholder--escuro placeholder--preenche">
             <picture>
               <source srcset="assets/img/logo.webp" type="image/webp">
               <img src="assets/img/logo.png" width="150" height="150" alt="" loading="lazy">
@@ -219,7 +223,7 @@
         <h2>Da primeira conversa ao espelho</h2>
       </div>
 
-      <ol class="processo" style="list-style:none;padding:0;margin-top:3.5rem">
+      <ol class="processo">
         <li class="passo">
           <span class="passo__numero">01</span>
           <h3>Avaliação</h3>
@@ -350,7 +354,7 @@
         <dl class="contato__dados">
           <div>
             <dt>Estúdio</dt>
-            <dd><a href="#" data-site="maps-link" target="_blank" rel="noopener"><span data-site="endereco">Rua Exemplo, 000 - Bairro, Cidade/UF</span></a></dd>
+            <dd><a href="#" data-site="maps-link" target="_blank" rel="noopener noreferrer"><span data-site="endereco">Rua Exemplo, 000 - Bairro, Cidade/UF</span></a></dd>
           </div>
           <div>
             <dt>Atendimento</dt>
@@ -374,12 +378,14 @@
       <form class="formulario" id="form-contato" novalidate>
         <div class="campo">
           <label for="nome">Nome</label>
-          <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Como podemos te chamar" required>
+          <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Como podemos te chamar"
+                 required minlength="2" maxlength="80" spellcheck="false">
         </div>
 
         <div class="campo">
           <label for="whatsapp">WhatsApp</label>
-          <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="(00) 00000-0000" required>
+          <input id="whatsapp" name="whatsapp" type="tel" autocomplete="tel" placeholder="(00) 00000-0000"
+                 required inputmode="tel" minlength="8" maxlength="20" pattern="[0-9()+\s.-]{8,20}">
         </div>
 
         <div class="campo">
@@ -397,7 +403,8 @@
 
         <div class="campo">
           <label for="mensagem">Mensagem <span>(opcional)</span></label>
-          <textarea id="mensagem" name="mensagem" rows="3" placeholder="Conte um pouco da sua situação"></textarea>
+          <textarea id="mensagem" name="mensagem" rows="3" maxlength="600"
+                    placeholder="Conte um pouco da sua situação"></textarea>
         </div>
 
         <!-- Campo oculto contra robôs. Não remover. -->
@@ -450,7 +457,7 @@
         <span class="rodape__titulo">Contato</span>
         <a href="#" data-site="whatsapp-link" rel="noopener">WhatsApp <span data-site="telefone">(11) 99999-9999</span></a>
         <a href="#" data-site="email-link"><span data-site="email">contato@exemplo.com.br</span></a>
-        <a href="#" data-site="instagram-link" target="_blank" rel="noopener">Instagram <span data-site="instagram">@perfil</span></a>
+        <a href="#" data-site="instagram-link" target="_blank" rel="noopener noreferrer">Instagram <span data-site="instagram">@perfil</span></a>
       </div>
     </div>
 
